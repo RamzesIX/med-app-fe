@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Client app used to manage diseases.",
   "scripts": {
-    "start": "npx parcel src/index.html",
+    "start": "npx parcel src/index.html --port 8080",
+    "build": "npx parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "npx husky install"
   },
