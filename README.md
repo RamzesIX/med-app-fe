@@ -1,2 +1,2 @@
 # med-app-fe
-Medical application to manage diseases.
+Client application used to manage medical information like diseases, risks or symptoms.
