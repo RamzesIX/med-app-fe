@@ -1,18 +1,25 @@
 @import "src/styles/constants";
 
-$headerHeight: 60px;
 $headerBoxShadow: 0 4px 5px 0 rgba(0,0,0,0.75);
 
 .header {
-  display: grid;
-  grid-gap: $gridMedium;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  padding: $gridBase $gridLarge;
   position: sticky;
   top: 0;
   height: $headerHeight;
   box-shadow: $headerBoxShadow;
+  z-index: $headerZIndex;
+  background-color: white; // TODO use a color from constants.scss
+
+  .headerContent {
+    height: 100%;
+    max-width: $mainContentWidth;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: $gridMedium;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    padding: $gridBase $gridLarge;
+  }
 
   .headerTitle {
       font-size: $fontSizeLarge;

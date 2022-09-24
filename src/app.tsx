@@ -1,13 +1,6 @@
-import { AppHeader } from './layout/header/header'
 import './styles/global.scss'
+import { AppMain } from './layout/main/main'
 
 export function App() {
-    return (
-        <div>
-            <div>
-                <AppHeader />
-                <main></main>
-            </div>
-        </div>
-    )
+    return <AppMain />
 }
