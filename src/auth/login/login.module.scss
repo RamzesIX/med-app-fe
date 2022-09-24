@@ -1,0 +1,31 @@
+@import 'src/styles/constants';
+
+$loginFormWidth: 25rem;
+$loginFormBorderRadius: 5px;
+$loginFormBorder: 1px solid black;
+$progressBarHeight: 0.3rem;
+
+.loginPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loginPageForm {
+        position: relative;
+        border-radius: $loginFormBorderRadius;
+        width: $loginFormWidth;
+        border: $loginFormBorder;
+        padding: $gridLarge;
+        display: grid;
+        grid-gap: $gridMedium;
+    }
+
+    .progressBar {
+        position: absolute;
+        bottom: 0;
+        height: $progressBarHeight;
+        width: 100%;
+    }
+}
