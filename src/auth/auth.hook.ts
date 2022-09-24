@@ -9,7 +9,7 @@ export interface IAuthHook extends Pick<IAuthService, 'signIn' | 'signOut'> {
 const authService = process.env.NODE_ENV === 'development' ? AuthMockService : AuthService
 
 export const useAuth = (): IAuthHook => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(authService.isAuthenticated())
 
     useEffect(() => {
         const sub = authService.isAuthenticated$.subscribe((isAuth) => setIsAuthenticated(isAuth))

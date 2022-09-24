@@ -12,12 +12,17 @@ class AuthMockServiceImpl implements IAuthService {
                 res()
             }, 2000)
         })
+
         this.authSubject.next(true)
     }
 
     public signOut(): void {
         console.log(`AuthMockService.signOut`)
         this.authSubject.next(false)
+    }
+
+    public isAuthenticated(): boolean {
+        return this.authSubject.value
     }
 }
 

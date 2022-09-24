@@ -9,9 +9,11 @@ import { defaultLoginValues } from './login.constants'
 import { useAuth } from '../auth.hook'
 
 import * as styles from './login.module.scss'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginPage: FC = () => {
     const { signIn } = useAuth()
+    const navigate = useNavigate()
 
     const { control, handleSubmit } = useForm<ILoginForm>({
         defaultValues: defaultLoginValues,
@@ -22,10 +24,10 @@ export const LoginPage: FC = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onSubmit = async ({ email, password }: ILoginForm): Promise<void> => {
-        console.debug('Submit', email, password)
         try {
             setLoading(true)
             await signIn(email, password)
+            navigate('/')
         } catch (e) {
             ErrorHandler.handleError(e)
         } finally {
