@@ -13,11 +13,13 @@ export const AppHeader: FC = () => {
 
     return (
         <header className={styles.header}>
-            <h1 className={styles.headerTitle}>Medical Admin Portal</h1>
-            <span>{username}</span>
-            <a href="#" onClick={signOut}>
-                Sign out
-            </a>
+            <div className={styles.headerContent}>
+                <h1 className={styles.headerTitle}>Medical Admin Portal</h1>
+                <span>{username}</span>
+                <a href="#" onClick={signOut}>
+                    Sign out
+                </a>
+            </div>
         </header>
     )
 }
