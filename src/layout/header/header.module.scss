@@ -1,27 +1,27 @@
-@import "src/styles/constants";
+@import 'src/styles/constants';
 
-$headerBoxShadow: 0 4px 5px 0 rgba(0,0,0,0.75);
+$headerBoxShadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
 
 .header {
-  position: sticky;
-  top: 0;
-  height: $headerHeight;
-  box-shadow: $headerBoxShadow;
-  z-index: $headerZIndex;
-  background-color: white; // TODO use a color from constants.scss
+    position: sticky;
+    top: 0;
+    height: $headerHeight;
+    box-shadow: $headerBoxShadow;
+    z-index: $headerZIndex;
+    background-color: white; // TODO use a color from constants.scss
 
-  .headerContent {
-    height: 100%;
-    max-width: $mainContentWidth;
-    margin: 0 auto;
-    display: grid;
-    grid-gap: $gridMedium;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    padding: $gridBase $gridLarge;
-  }
+    .headerContent {
+        height: 100%;
+        max-width: $mainContentWidth;
+        margin: 0 auto;
+        display: grid;
+        grid-gap: $gridMedium;
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        padding: $gridBase $gridLarge;
+    }
 
-  .headerTitle {
-      font-size: $fontSizeLarge;
-  }
+    .headerTitle {
+        font-size: $fontSizeLarge;
+    }
 }
