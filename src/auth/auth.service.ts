@@ -8,6 +8,7 @@ import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs'
 export interface IAuthService {
     signIn(login: string, password: string): Promise<void>
     signOut(): void
+    isAuthenticated(): boolean
     isAuthenticated$: Observable<boolean>
 }
 
@@ -39,7 +40,7 @@ class AuthServiceImpl implements IAuthService {
         this.authSubject.next(false)
     }
 
-    private isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         const accessToken = this.authStorage.getAccessToken()
         if (!accessToken) {
             return false
