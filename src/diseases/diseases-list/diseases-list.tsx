@@ -8,13 +8,13 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import * as styles from './diseases-list.module.scss'
 
 export const DiseasesList: FC = () => {
-    const { data, loadNext, openCreateDiseaseDialog, deleteDisease, openUpdateDiseaseDialog } = useDiseasesList()
+    const { data, loadNext, navigateToDiseaseDetails, deleteDisease } = useDiseasesList()
 
     return (
         <div className={styles.diseasesList}>
             <div className={styles.header}>
                 <h1 className={styles.title}>Diseases</h1>
-                <IconButton area-label="Add new disease." onClick={openCreateDiseaseDialog}>
+                <IconButton area-label="Add new disease." onClick={() => navigateToDiseaseDetails(null)}>
                     <AddCircleOutlineIcon fontSize="large" />
                 </IconButton>
             </div>
@@ -22,7 +22,13 @@ export const DiseasesList: FC = () => {
                 data={data}
                 loadMore={loadNext}
                 itemContent={(_, { id, name, description }) => (
-                    <DiseasesCard id={id} name={name} description={description} onDelete={deleteDisease} onEdit={openUpdateDiseaseDialog} />
+                    <DiseasesCard
+                        id={id}
+                        name={name}
+                        description={description}
+                        onDelete={deleteDisease}
+                        onEdit={navigateToDiseaseDetails}
+                    />
                 )}
             />
         </div>

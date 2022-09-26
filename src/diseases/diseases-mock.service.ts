@@ -1,5 +1,5 @@
 import { IPaginationParams, IPaginationResponse } from '../core/types'
-import { IDisease } from './diseases.types'
+import { DiseaseCreatePayload, DiseaseUpdatePayload, IDisease, IDiseaseCreateResponse, IDiseaseDetails } from './diseases.types'
 import { ISymptom } from '../symptoms/symptoms.types'
 import { IRisk } from '../risks/risks.types'
 import { IDiseasesService } from './diseases.service'
@@ -13,7 +13,7 @@ function generateNestedData(id: string, label: string): Array<IRisk | ISymptom> 
     }))
 }
 
-const diseases = new Array(100).fill(null).map((_, index) => ({
+let diseases: IDiseaseDetails[] = new Array(100).fill(null).map((_, index) => ({
     id: String(index + 1),
     name: `Disease ${index + 1}`,
     description: `Disease description ${index + 1}`,
@@ -38,6 +38,14 @@ class DiseaseMockServiceImpl implements IDiseasesService {
         return { data, meta: { total, limit, offset: offset + limit } }
     }
 
+    public async getDisease(diseaseId: string): Promise<IDiseaseDetails> {
+        const disease = diseases.find(({ id }) => id === diseaseId)
+        if (!disease) {
+            throw new Error(`Disease with id ${diseaseId} is not found.`)
+        }
+        return disease
+    }
+
     public async getDiseaseSymptoms(diseaseId: string): Promise<ISymptom[]> {
         console.debug('DiseaseMockServiceImpl.getDiseaseSymptoms', diseaseId)
 
@@ -60,6 +68,32 @@ class DiseaseMockServiceImpl implements IDiseasesService {
         await delay(2000)
         console.debug('DiseaseMockServiceImpl.getDiseaseRisks Data', disease.risks)
         return disease.risks
+    }
+
+    public async createDisease(payload: DiseaseCreatePayload): Promise<IDiseaseCreateResponse> {
+        console.debug('DiseaseMockServiceImpl.createDisease', payload)
+        await delay(2000)
+        const id = Date.now().toString()
+        diseases.push({ ...payload, id })
+        return { id }
+    }
+
+    public async updateDisease(payload: DiseaseUpdatePayload): Promise<void> {
+        console.debug('DiseaseMockServiceImpl.updateDisease', payload)
+
+        await delay(2000)
+
+        const diseaseIndex = diseases.findIndex(({ id }) => id === payload.id)
+        if (diseaseIndex !== -1) {
+            diseases[diseaseIndex] = payload
+        }
+    }
+
+    public async deleteDisease(diseaseId: string): Promise<void> {
+        console.debug('DiseaseMockServiceImpl.deleteDisease', diseaseId)
+        await delay(2000)
+
+        diseases = diseases.filter(({ id }) => id !== diseaseId)
     }
 }
 
