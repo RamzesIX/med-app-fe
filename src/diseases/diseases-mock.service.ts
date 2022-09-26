@@ -1,8 +1,8 @@
-import { IPaginationParams, IPaginationResponse } from '../core/types'
-import { IDisease } from './diseases.types'
-import { ISymptom } from '../symptoms/symptoms.types'
 import { IRisk } from '../risks/risks.types'
-import { IDiseasesService } from './diseases.service'
+import { ISymptom } from '../symptoms/symptoms.types'
+import { DiseaseCreatePayload, DiseaseUpdatePayload, IDisease, IDiseaseCreateResponse, IDiseaseDetails } from './diseases.types'
+import { IDiseasesService } from './diseases.service.types'
+import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { delay } from '../core/utils'
 
 function generateNestedData(id: string, label: string): Array<IRisk | ISymptom> {
@@ -13,7 +13,7 @@ function generateNestedData(id: string, label: string): Array<IRisk | ISymptom> 
     }))
 }
 
-const diseases = new Array(100).fill(null).map((_, index) => ({
+let diseases: IDiseaseDetails[] = new Array(100).fill(null).map((_, index) => ({
     id: String(index + 1),
     name: `Disease ${index + 1}`,
     description: `Disease description ${index + 1}`,
@@ -21,7 +21,7 @@ const diseases = new Array(100).fill(null).map((_, index) => ({
     risks: generateNestedData(String(index + 1), 'Risk'),
 }))
 
-class DiseaseMockServiceImpl implements IDiseasesService {
+export class DiseaseMockServiceImpl implements IDiseasesService {
     public async getDiseases({ offset, limit }: IPaginationParams): Promise<IPaginationResponse<IDisease>> {
         console.debug('DiseaseMockServiceImpl.getDiseases', offset, limit)
         const total = diseases.length
@@ -36,6 +36,14 @@ class DiseaseMockServiceImpl implements IDiseasesService {
         await delay(2000)
         console.debug('DiseaseMockServiceImpl.getDiseases Data', data)
         return { data, meta: { total, limit, offset: offset + limit } }
+    }
+
+    public async getDisease(diseaseId: string): Promise<IDiseaseDetails> {
+        const disease = diseases.find(({ id }) => id === diseaseId)
+        if (!disease) {
+            throw new Error(`Disease with id ${diseaseId} is not found.`)
+        }
+        return disease
     }
 
     public async getDiseaseSymptoms(diseaseId: string): Promise<ISymptom[]> {
@@ -61,6 +69,30 @@ class DiseaseMockServiceImpl implements IDiseasesService {
         console.debug('DiseaseMockServiceImpl.getDiseaseRisks Data', disease.risks)
         return disease.risks
     }
-}
 
-export const DiseasesMockService = new DiseaseMockServiceImpl()
+    public async createDisease(payload: DiseaseCreatePayload): Promise<IDiseaseCreateResponse> {
+        console.debug('DiseaseMockServiceImpl.createDisease', payload)
+        await delay(2000)
+        const id = Date.now().toString()
+        diseases = [{ ...payload, id }, ...diseases]
+        return { id }
+    }
+
+    public async updateDisease(payload: DiseaseUpdatePayload): Promise<void> {
+        console.debug('DiseaseMockServiceImpl.updateDisease', payload)
+
+        await delay(2000)
+
+        const diseaseIndex = diseases.findIndex(({ id }) => id === payload.id)
+        if (diseaseIndex !== -1) {
+            diseases[diseaseIndex] = payload
+        }
+    }
+
+    public async deleteDisease(diseaseId: string): Promise<void> {
+        console.debug('DiseaseMockServiceImpl.deleteDisease', diseaseId)
+        await delay(2000)
+
+        diseases = diseases.filter(({ id }) => id !== diseaseId)
+    }
+}

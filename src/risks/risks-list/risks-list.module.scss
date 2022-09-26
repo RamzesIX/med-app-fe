@@ -1,6 +1,14 @@
 @import 'src/styles/constants';
 
-.container {
+.risksList {
     display: grid;
-    grid-gap: 20px;
+    grid-gap: $gridBase;
+
+    .header {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: $gridBase;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

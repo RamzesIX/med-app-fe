@@ -1,0 +1,22 @@
+@import 'src/styles/constants';
+
+$diseaseFormWidth: 30rem;
+
+.diseaseDetails {
+    width: 100%;
+    display: grid;
+
+    .form {
+        justify-self: center;
+        width: $diseaseFormWidth;
+        display: grid;
+        grid-gap: $gridMedium;
+    }
+
+    .actions {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: $gridMedium;
+        justify-content: end;
+    }
+}

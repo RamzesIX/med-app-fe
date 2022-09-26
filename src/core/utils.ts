@@ -7,3 +7,8 @@ export function delay(time: number): Promise<void> {
         setTimeout(res, time)
     })
 }
+
+// TODO remove me once the server API is finished
+export function isClientMode(): boolean {
+    return process.env.APP_MODE === 'client'
+}
