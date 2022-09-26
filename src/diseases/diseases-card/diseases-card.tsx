@@ -41,13 +41,12 @@ export const DiseasesCard: FC<IDiseasesCardProps> = ({ id, name, description, cl
                     {actionLoading && <CircularProgress size={globalConstants.circularProgressSize} />}
                     {!actionLoading && (
                         <>
-                            {' '}
                             <IconButton aria-label="Edit Disease" onClick={() => onEdit(id)}>
                                 <EditIcon />
                             </IconButton>
                             <IconButton aria-label="Delete Disease" onClick={deleteDisease}>
                                 <DeleteIcon />
-                            </IconButton>{' '}
+                            </IconButton>
                         </>
                     )}
                 </div>

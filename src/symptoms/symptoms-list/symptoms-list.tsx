@@ -12,7 +12,7 @@ export const SymptomsList = () => {
         <div className={styles.symptomsList}>
             <div className={styles.header}>
                 <h1>Symptoms</h1>
-                <IconButton area-label="Add new risk." onClick={() => console.log('Risk Dialog')}>
+                <IconButton area-label="Add new symptom." onClick={() => console.log('Symptom Dialog')}>
                     <AddCircleOutlineIcon fontSize="large" />
                 </IconButton>
             </div>
