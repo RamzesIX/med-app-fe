@@ -1,0 +1,23 @@
+@import 'src/styles/constants';
+
+$riskCardHeight: 100px;
+$riskCardBoxShadow: 2px 2px 6px 1px rgba(0, 0, 0, 0.75);
+
+.riskCard {
+    width: 100%;
+    height: $riskCardHeight;
+    display: grid;
+    grid-gap: $gridBase;
+    grid-template-rows: auto minmax(0, 1fr);
+    contain: strict;
+    box-shadow: $riskCardBoxShadow;
+    padding: $gridBase;
+
+    .title {
+        font-weight: bold;
+    }
+
+    .description {
+        font-size: $fontSizeSmall;
+    }
+}

@@ -7,3 +7,19 @@ export interface IResponseStatus {
     code: string
     message: string
 }
+
+export interface IPaginationParams {
+    offset: number
+    limit: number
+}
+
+export interface IPaginationMeta {
+    offset: number
+    limit: number
+    total: number
+}
+
+export interface IPaginationResponse<TData> {
+    data: TData[]
+    meta: IPaginationMeta
+}
