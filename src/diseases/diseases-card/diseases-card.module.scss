@@ -1,0 +1,46 @@
+@import 'src/styles/constants';
+
+$diseaseCardBorder: 1px solid black;
+
+.diseaseCard {
+    display: grid;
+    grid-gap: $gridMedium;
+    border-radius: $borderRadiusBase;
+    padding: $gridMedium;
+    width: 100%;
+
+    border: $diseaseCardBorder;
+
+    .primaryContent {
+        display: grid;
+        grid-template-areas: 'title actions' 'description description';
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+    }
+
+    .title {
+        grid-area: title;
+        font-size: $fontSizeLarge;
+    }
+
+    .description {
+        grid-area: description;
+        font-size: $fontSizeSmall;
+    }
+
+    .actions {
+        grid-area: actions;
+    }
+
+    .accordionTitle {
+        font-weight: bold;
+    }
+}
+
+:global {
+    .disease-card-accordion-summary {
+        display: flex;
+        gap: $gridLarge;
+        justify-content: space-between;
+    }
+}
