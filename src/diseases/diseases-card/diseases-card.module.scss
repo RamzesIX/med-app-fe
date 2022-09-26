@@ -16,6 +16,7 @@ $diseaseCardBorder: 1px solid black;
         grid-template-areas: 'title actions' 'description description';
         grid-template-columns: 1fr auto;
         grid-template-rows: auto auto;
+        align-items: center;
     }
 
     .title {
@@ -30,10 +31,6 @@ $diseaseCardBorder: 1px solid black;
 
     .actions {
         grid-area: actions;
-    }
-
-    .accordionTitle {
-        font-weight: bold;
     }
 }
 
