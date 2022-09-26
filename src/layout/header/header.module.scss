@@ -16,10 +16,17 @@ $headerBoxShadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
         max-width: $mainContentWidth;
         margin: 0 auto;
         display: grid;
-        grid-gap: $gridMedium;
-        grid-template-columns: 1fr auto auto;
+        grid-gap: $gridLarge;
+        grid-template-columns: auto 1fr auto auto;
         align-items: center;
         padding: $gridBase $gridLarge;
+    }
+
+    .logo {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: $gridTiny;
+        align-items: center;
     }
 
     .headerTitle {
