@@ -3,16 +3,9 @@ import { DiseaseCreatePayload, DiseaseUpdatePayload, IDisease, IDiseaseCreateRes
 import { ISymptom } from '../symptoms/symptoms.types'
 import { IRisk } from '../risks/risks.types'
 import { HttpClient, IHttpClient } from '../services/http-client'
-
-export interface IDiseasesService {
-    getDiseases(params: IPaginationParams): Promise<IPaginationResponse<IDisease>>
-    getDisease(diseaseId: string): Promise<IDiseaseDetails>
-    getDiseaseSymptoms(diseaseId: string): Promise<ISymptom[]>
-    getDiseaseRisks(diseaseId: string): Promise<IRisk[]>
-    createDisease(payload: DiseaseCreatePayload): Promise<IDiseaseCreateResponse>
-    updateDisease(payload: DiseaseUpdatePayload): Promise<void>
-    deleteDisease(diseaseId: string): Promise<void>
-}
+import { isClientMode } from '../core/utils'
+import { IDiseasesService } from './diseases.service.types'
+import { DiseaseMockServiceImpl } from './diseases-mock.service'
 
 class DiseaseServiceImpl implements IDiseasesService {
     constructor(private readonly httpClient: IHttpClient) {}
@@ -54,4 +47,4 @@ class DiseaseServiceImpl implements IDiseasesService {
     }
 }
 
-export const DiseasesService = new DiseaseServiceImpl(HttpClient)
+export const DiseasesService = isClientMode() ? new DiseaseMockServiceImpl() : new DiseaseServiceImpl(HttpClient)

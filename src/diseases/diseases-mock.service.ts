@@ -1,8 +1,8 @@
-import { IPaginationParams, IPaginationResponse } from '../core/types'
-import { DiseaseCreatePayload, DiseaseUpdatePayload, IDisease, IDiseaseCreateResponse, IDiseaseDetails } from './diseases.types'
-import { ISymptom } from '../symptoms/symptoms.types'
 import { IRisk } from '../risks/risks.types'
-import { IDiseasesService } from './diseases.service'
+import { ISymptom } from '../symptoms/symptoms.types'
+import { DiseaseCreatePayload, DiseaseUpdatePayload, IDisease, IDiseaseCreateResponse, IDiseaseDetails } from './diseases.types'
+import { IDiseasesService } from './diseases.service.types'
+import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { delay } from '../core/utils'
 
 function generateNestedData(id: string, label: string): Array<IRisk | ISymptom> {
@@ -21,7 +21,7 @@ let diseases: IDiseaseDetails[] = new Array(100).fill(null).map((_, index) => ({
     risks: generateNestedData(String(index + 1), 'Risk'),
 }))
 
-class DiseaseMockServiceImpl implements IDiseasesService {
+export class DiseaseMockServiceImpl implements IDiseasesService {
     public async getDiseases({ offset, limit }: IPaginationParams): Promise<IPaginationResponse<IDisease>> {
         console.debug('DiseaseMockServiceImpl.getDiseases', offset, limit)
         const total = diseases.length
@@ -96,5 +96,3 @@ class DiseaseMockServiceImpl implements IDiseasesService {
         diseases = diseases.filter(({ id }) => id !== diseaseId)
     }
 }
-
-export const DiseasesMockService = new DiseaseMockServiceImpl()

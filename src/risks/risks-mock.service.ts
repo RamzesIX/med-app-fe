@@ -1,21 +1,24 @@
-import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { IRisk } from './risks.types'
-import { IRisksService } from './risks.service'
+import { IPaginationParams, IPaginationResponse } from '../core/types'
+import { IRisksService } from './risks.service.types'
 
 const risks: IRisk[] = new Array(100)
     .fill(null)
     .map((_, index) => ({ id: String(index + 1), name: `Risk Name ${index + 1}`, description: `Description ${index + 1}` }))
 
-class RisksMockServiceImpl implements IRisksService {
+export class RisksMockServiceImpl implements IRisksService {
     public async getRisks({ offset, limit }: IPaginationParams): Promise<IPaginationResponse<IRisk>> {
-        console.debug('RisksMockServiceImpl', offset, limit)
+        console.debug('RisksMockServiceImpl.getRisks', offset, limit)
         const total = risks.length
         if (offset >= total) {
             return { data: [], meta: { limit, total, offset } }
         }
-        console.debug('data', risks.slice(offset, offset + limit))
+        const data = risks.slice(offset, offset + limit)
+        console.debug('RisksMockServiceImpl.getRisks Data', data)
         return { data: risks.slice(offset, offset + limit), meta: { total, limit, offset: offset + limit } }
     }
-}
 
-export const RisksMockService = new RisksMockServiceImpl()
+    public async getAllRisks(): Promise<IRisk[]> {
+        return risks
+    }
+}

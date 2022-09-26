@@ -1,10 +1,9 @@
 import { IPaginationParams, IPaginationResponse } from '../core/types'
-import { ISymptom } from './symptoms.types'
+import { ISymptom, SymptomCreatePayload, SymptomCreateResponse, SymptomUpdatePayload } from './symptoms.types'
 import { HttpClient, IHttpClient } from '../services/http-client'
-
-export interface ISymptomsService {
-    getSymptoms(params: IPaginationParams): Promise<IPaginationResponse<ISymptom>>
-}
+import { ISymptomsService } from './symptoms.service.types'
+import { isClientMode } from '../core/utils'
+import { SymptomMockServiceImpl } from './symptoms-mock.service'
 
 class SymptomServiceImpl implements ISymptomsService {
     constructor(private readonly httpClient: IHttpClient) {}
@@ -13,6 +12,20 @@ class SymptomServiceImpl implements ISymptomsService {
         const { data } = await this.httpClient.get<IPaginationResponse<ISymptom>>('/symptoms', { params })
         return data
     }
+
+    public async getAllSymptoms(): Promise<ISymptom[]> {
+        const { data } = await this.httpClient.get<ISymptom[]>('/symptoms')
+        return data
+    }
+
+    public async createSymptom(payload: SymptomCreatePayload): Promise<SymptomCreateResponse> {
+        const { data } = await this.httpClient.post<SymptomCreateResponse>('/symptoms', payload)
+        return data
+    }
+
+    public async updateSymptom(payload: SymptomUpdatePayload): Promise<void> {
+        await this.httpClient.put<never, SymptomUpdatePayload>(`/symptoms/${payload.id}`, payload)
+    }
 }
 
-export const SymptomsService = new SymptomServiceImpl(HttpClient)
+export const SymptomsService = isClientMode() ? new SymptomMockServiceImpl() : new SymptomServiceImpl(HttpClient)

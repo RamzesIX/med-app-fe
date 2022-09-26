@@ -6,10 +6,13 @@ import { Button, TextField } from '@mui/material'
 
 import * as styles from './disease-details.module.scss'
 import { useParams } from 'react-router-dom'
+import { SymptomControl } from './symptom-control/symptom-control'
 
 export const DiseaseDetails: FC = () => {
     const { id } = useParams()
-    const { createDisease, updateDisease, goBack, form, loading } = useDiseaseDetails(id ?? null)
+    const { createDisease, updateDisease, goBack, form, loading, options, addSymptom } = useDiseaseDetails(id ?? null)
+
+    const { symptoms } = options
 
     const {
         handleSubmit,
@@ -19,9 +22,9 @@ export const DiseaseDetails: FC = () => {
 
     const createOrUpdateDisease = async (data: IDiseaseForm): Promise<void> => {
         if (id) {
-            await updateDisease({ id, ...data, risks: [], symptoms: [] })
+            await updateDisease({ id, ...data, risks: [] })
         } else {
-            await createDisease({ ...data, risks: [], symptoms: [] })
+            await createDisease({ ...data, risks: [] })
         }
     }
 
@@ -56,10 +59,14 @@ export const DiseaseDetails: FC = () => {
                             variant="outlined"
                             label="Description"
                             multiline
+                            rows={3}
                             disabled={loading}
                         />
                     )}
                 />
+
+                <SymptomControl options={symptoms} control={control} onSubmit={addSymptom} loading={loading} />
+
                 <div className={styles.actions}>
                     <Button variant="outlined" disabled={isSubmitting || loading} type="button" onClick={goBack}>
                         Cancel

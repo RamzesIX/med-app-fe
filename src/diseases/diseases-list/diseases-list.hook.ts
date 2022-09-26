@@ -1,7 +1,7 @@
 import { DiseaseRoutingAction, IDisease } from '../diseases.types'
 import { IPaginationHook } from '../../core/hooks/pagination/pagination.hook.types'
 import { usePagination } from '../../core/hooks/pagination/pagination.hook'
-import { DiseasesMockService } from '../diseases-mock.service'
+import { DiseasesService } from '../diseases.service'
 import { useNavigate } from 'react-router-dom'
 import { ErrorHandler } from '../../services/error-handler'
 
@@ -10,7 +10,7 @@ export interface IDiseasesListHook extends IPaginationHook<IDisease> {
     deleteDisease(id: string): Promise<void>
 }
 
-const loadData = DiseasesMockService.getDiseases.bind(DiseasesMockService)
+const loadData = DiseasesService.getDiseases.bind(DiseasesService)
 
 export function useDiseasesList(): IDiseasesListHook {
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ export function useDiseasesList(): IDiseasesListHook {
 
     const deleteDisease = async (id: string): Promise<void> => {
         try {
-            await DiseasesMockService.deleteDisease(id)
+            await DiseasesService.deleteDisease(id)
         } catch (e) {
             ErrorHandler.handleError(e)
         }
