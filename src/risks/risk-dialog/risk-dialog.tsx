@@ -1,40 +1,40 @@
 import { FC } from 'react'
-import { ISymptomDialogForm, ISymptomDialogProps, SymptomDialogFormField } from './symptom-dialog.types'
+import { IRiskDialogForm, IRiskDialogProps, RiskDialogFormField } from './risk-dialog.types'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
-import { SymptomCreatePayload } from '../symptoms.types'
 import { Button, TextField } from '@mui/material'
-import * as styles from './symptom-dialog.module.scss'
-import { symptomDialogValidation } from './symptom-dialog.validation'
+import * as styles from './risk-dialog.module.scss'
+import { riskDialogValidation } from './risk-dialog.validation'
+import { RiskCreatePayload } from '../risks.types'
 
-export const SymptomDialog: FC<ISymptomDialogProps> = ({ data, onSubmit, onClose }) => {
+export const RiskDialog: FC<IRiskDialogProps> = ({ data, onSubmit, onClose }) => {
     const {
         control,
         handleSubmit,
         formState: { isSubmitting },
-    } = useForm<ISymptomDialogForm>({
+    } = useForm<IRiskDialogForm>({
         defaultValues: data,
         mode: 'onBlur',
-        resolver: yupResolver(symptomDialogValidation),
+        resolver: yupResolver(riskDialogValidation),
     })
 
-    const saveOrUpdateSymptom = async (payload: SymptomCreatePayload): Promise<void> => {
+    const saveOrUpdateRisk = async (payload: RiskCreatePayload): Promise<void> => {
         await onSubmit(payload)
     }
 
     return (
-        <div className={styles.symptomDialog}>
+        <div className={styles.riskDialog}>
             <form className={styles.form}>
-                <h1 className={styles.title}>Edit Symptom</h1>
+                <h1 className={styles.title}>Edit Risk</h1>
                 <Controller
-                    name={SymptomDialogFormField.Name}
+                    name={RiskDialogFormField.Name}
                     control={control}
                     render={({ field, fieldState: { error } }) => (
                         <TextField error={!!error} helperText={error?.message} {...field} variant="outlined" label="Name" />
                     )}
                 />
                 <Controller
-                    name={SymptomDialogFormField.Description}
+                    name={RiskDialogFormField.Description}
                     control={control}
                     render={({ field, fieldState: { error } }) => (
                         <TextField
@@ -52,7 +52,7 @@ export const SymptomDialog: FC<ISymptomDialogProps> = ({ data, onSubmit, onClose
                     <Button variant="outlined" disabled={isSubmitting} type="button" onClick={onClose}>
                         Close
                     </Button>
-                    <Button variant="outlined" disabled={isSubmitting} type="button" onClick={handleSubmit(saveOrUpdateSymptom)}>
+                    <Button variant="outlined" disabled={isSubmitting} type="button" onClick={handleSubmit(saveOrUpdateRisk)}>
                         Save
                     </Button>
                 </div>

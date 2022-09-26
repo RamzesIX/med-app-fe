@@ -1,9 +1,8 @@
 import { FC, SyntheticEvent } from 'react'
-import { ISymptomControlProps } from './symptom-control.types'
+import { IRiskControlProps, RiskOption } from './risk-control.types'
 import { Controller } from 'react-hook-form'
 import { DiseaseFormField, IAutocompleteOption } from '../disease-details.types'
 import { Autocomplete, Dialog, TextField } from '@mui/material'
-import { ISymptom, SymptomCreatePayload } from '../../../symptoms/symptoms.types'
 import {
     buildAutocompleteFilter,
     getAutocompleteOptionLabel,
@@ -11,22 +10,23 @@ import {
     retrieveAutocompleteStringValue,
 } from '../disease-details.utils'
 import { useDialog } from '../../../core/hooks/dialog/dialog.hook'
-import { ISymptomDialogProps } from '../../../symptoms/symptoms-dialog/symptom-dialog.types'
-import { SymptomDialog } from '../../../symptoms/symptoms-dialog/symptom-dialog'
 import { ControllerRenderProps } from 'react-hook-form/dist/types/controller'
+import { IRisk, RiskCreatePayload } from '../../../risks/risks.types'
+import { IRiskDialogProps } from '../../../risks/risk-dialog/risk-dialog.types'
+import { RiskDialog } from '../../../risks/risk-dialog/risk-dialog'
 
-const filter = buildAutocompleteFilter<ISymptom>((option: IAutocompleteOption) => ({ ...option, description: '' }))
+const filter = buildAutocompleteFilter<IRisk>((option: IAutocompleteOption) => ({ ...option, description: '' }))
 
-export const SymptomControl: FC<ISymptomControlProps> = ({ onSubmit, control, options, loading }) => {
-    const { open, data, openDialog, closeDialog } = useDialog<ISymptomDialogProps['data']>()
+export const RiskControl: FC<IRiskControlProps> = ({ onSubmit, control, options, loading }) => {
+    const { open, data, openDialog, closeDialog } = useDialog<IRiskDialogProps['data']>()
 
-    const addNewSymptom = (payload: SymptomCreatePayload): void => {
+    const addNewRisk = (payload: RiskCreatePayload): void => {
         onSubmit(payload)
         closeDialog()
     }
 
-    const handleSymptomChange =
-        (onControlChange: ControllerRenderProps['onChange']) => (_: SyntheticEvent, values?: Array<ISymptom | string>) => {
+    const handleRiskChange =
+        (onControlChange: ControllerRenderProps['onChange']) => (_: SyntheticEvent, values?: Array<IRisk | string>) => {
             if (!values || !values.some(isAutocompleteStringValue)) {
                 onControlChange(values)
                 return
@@ -39,17 +39,17 @@ export const SymptomControl: FC<ISymptomControlProps> = ({ onSubmit, control, op
     return (
         <div>
             <Controller
-                name={DiseaseFormField.Symptoms}
+                name={DiseaseFormField.Risks}
                 control={control}
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => {
                     return (
                         <Autocomplete
                             value={value}
                             onBlur={onBlur}
-                            id={DiseaseFormField.Symptoms}
+                            id={DiseaseFormField.Risks}
                             multiple
-                            onChange={handleSymptomChange(onChange)}
-                            isOptionEqualToValue={(option: ISymptom, value: ISymptom) => option.id === value.id}
+                            onChange={handleRiskChange(onChange)}
+                            isOptionEqualToValue={(option: RiskOption, value: RiskOption) => option.id === value.id}
                             options={options}
                             freeSolo
                             filterOptions={filter}
@@ -61,15 +61,15 @@ export const SymptomControl: FC<ISymptomControlProps> = ({ onSubmit, control, op
                                     helperText={error?.message}
                                     disabled={loading}
                                     variant="outlined"
-                                    label="Symptoms"
-                                    placeholder="Osteoporosis"
+                                    label="Risks"
+                                    placeholder="Lack of exercise"
                                 />
                             )}
                         />
                     )
                 }}
             />
-            <Dialog open={open}>{data && <SymptomDialog data={data} onClose={closeDialog} onSubmit={addNewSymptom} />}</Dialog>
+            <Dialog open={open}>{data && <RiskDialog data={data} onClose={closeDialog} onSubmit={addNewRisk} />}</Dialog>
         </div>
     )
 }

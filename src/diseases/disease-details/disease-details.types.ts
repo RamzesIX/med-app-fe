@@ -1,10 +1,6 @@
 import { IRisk } from '../../risks/risks.types'
 import { ISymptom } from '../../symptoms/symptoms.types'
 
-export interface IDiseaseDetailsProps {
-    id: string | null
-}
-
 export enum DiseaseFormField {
     Name = 'name',
     Description = 'description',
@@ -19,6 +15,8 @@ export interface IDiseaseForm {
     [DiseaseFormField.Risks]: IRisk[]
 }
 
-export interface IAutocompleteNewOption {
-    newValue: string
+export interface IAutocompleteOption {
+    id: string
+    name: string
+    newValue?: string
 }

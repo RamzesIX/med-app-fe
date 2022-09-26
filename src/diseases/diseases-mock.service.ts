@@ -74,7 +74,7 @@ export class DiseaseMockServiceImpl implements IDiseasesService {
         console.debug('DiseaseMockServiceImpl.createDisease', payload)
         await delay(2000)
         const id = Date.now().toString()
-        diseases.push({ ...payload, id })
+        diseases = [{ ...payload, id }, ...diseases]
         return { id }
     }
 

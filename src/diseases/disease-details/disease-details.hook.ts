@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { diseaseDetailsValidation } from './disease-details.validation'
 import { ErrorHandler } from '../../services/error-handler'
 import { DiseasesService } from '../diseases.service'
-import { IRisk } from '../../risks/risks.types'
+import { IRisk, RiskCreatePayload } from '../../risks/risks.types'
 import { ISymptom, SymptomCreatePayload } from '../../symptoms/symptoms.types'
 import { RisksService } from '../../risks/risks.service'
 import { SymptomsService } from '../../symptoms/symptoms.service'
@@ -29,6 +29,7 @@ export interface IDiseaseDetailsHook extends IDiseaseDetailsHookState {
     updateDisease(payload: DiseaseUpdatePayload): void
     goBack(): void
     addSymptom(payload: SymptomCreatePayload): void
+    addRisk(payload: RiskCreatePayload): void
 }
 
 export function useDiseaseDetails(id: string | null): IDiseaseDetailsHook {
@@ -106,6 +107,12 @@ export function useDiseaseDetails(id: string | null): IDiseaseDetailsHook {
         setValue(DiseaseFormField.Symptoms, symptoms, { shouldValidate: true, shouldDirty: true })
     }
 
+    const addRisk = (payload: RiskCreatePayload): void => {
+        const risks = getValues(DiseaseFormField.Risks)
+        risks.push({ id: Date.now().toString(), ...payload })
+        setValue(DiseaseFormField.Risks, risks, { shouldValidate: true, shouldDirty: true })
+    }
+
     return {
         options,
         loading,
@@ -114,5 +121,6 @@ export function useDiseaseDetails(id: string | null): IDiseaseDetailsHook {
         updateDisease,
         goBack,
         addSymptom,
+        addRisk,
     }
 }

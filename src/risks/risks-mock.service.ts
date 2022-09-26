@@ -1,6 +1,7 @@
-import { IRisk } from './risks.types'
+import { IRisk, RiskCreatePayload, RiskCreateResponse, RiskUpdatePayload } from './risks.types'
 import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { IRisksService } from './risks.service.types'
+import { delay } from '../core/utils'
 
 const risks: IRisk[] = new Array(100)
     .fill(null)
@@ -20,5 +21,23 @@ export class RisksMockServiceImpl implements IRisksService {
 
     public async getAllRisks(): Promise<IRisk[]> {
         return risks
+    }
+
+    public async createRisk(payload: RiskCreatePayload): Promise<RiskCreateResponse> {
+        console.debug('RisksMockServiceImpl.createRisk', payload)
+        await delay(2000)
+        const id = String(Date.now().toString())
+        risks.push({ id, ...payload })
+        return { id }
+    }
+
+    public async updateRisk(payload: RiskUpdatePayload): Promise<void> {
+        console.debug('RisksMockServiceImpl.updateRisk', payload)
+        await delay(2000)
+        const index = risks.findIndex(({ id }) => payload.id === id)
+        if (!index) {
+            throw new Error(`Risk with id:${payload.id} is not found.`)
+        }
+        risks[index] = payload
     }
 }

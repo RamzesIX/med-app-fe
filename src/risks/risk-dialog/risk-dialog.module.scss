@@ -1,0 +1,24 @@
+@import 'src/styles/constants';
+
+$riskDialogWidth: 30rem;
+
+.riskDialog {
+    padding: $gridLarge;
+    width: $riskDialogWidth;
+
+    .title {
+        font-size: $fontSizeLarge;
+    }
+
+    .form {
+        display: grid;
+        grid-gap: $gridMedium;
+    }
+
+    .actions {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: $gridMedium;
+        justify-content: space-between;
+    }
+}
