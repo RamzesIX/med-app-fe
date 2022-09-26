@@ -4,7 +4,7 @@ import { IPaginationHook } from '../../core/hooks/pagination/pagination.hook.typ
 import { ISymptom } from '../symptoms.types'
 import { SymptomsService } from '../symptoms.service'
 
-export interface ISymptomsHook extends Omit<IPaginationHook<ISymptom>, 'data'> {
+export interface ISymptomsHook extends Pick<IPaginationHook<ISymptom>, 'loadNext'> {
     symptoms: ISymptom[]
     loading: boolean
 }
@@ -12,12 +12,11 @@ export interface ISymptomsHook extends Omit<IPaginationHook<ISymptom>, 'data'> {
 const loadSymptoms = SymptomsService.getSymptoms.bind(SymptomsService)
 
 export const useSymptoms = (): ISymptomsHook => {
-    const { loading, data, canLoadMore, loadNext } = usePagination<ISymptom>(loadSymptoms)
+    const { loading, data, loadNext } = usePagination<ISymptom>(loadSymptoms)
 
     return {
         symptoms: data,
         loading,
-        canLoadMore,
         loadNext,
     }
 }

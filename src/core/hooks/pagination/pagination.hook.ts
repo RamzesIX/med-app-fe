@@ -15,17 +15,18 @@ export function usePagination<TData>(
     const metaRef: MutableRefObject<IPaginationMeta> = useRef<IPaginationMeta>({ offset: 0, limit: defaultLimit, total: 0 })
     const [state, setState] = useState<IPaginationHookState<TData>>(defaultState)
 
-    const requestData = useCallback<(offset: number) => Promise<void>>(
-        async (offset) => {
+    const requestData = useCallback<(offset: number, prevData: TData[]) => Promise<void>>(
+        async (offset, prevData) => {
             try {
                 setState((prevState) => ({ ...prevState, loading: true }))
                 stateRef.current.loading = true
 
                 const { data, meta } = await loadData({ offset, limit: metaRef.current.limit })
 
-                stateRef.current = { data, loading: false }
+                const newState = { data: [...prevData, ...data], loading: false }
+                stateRef.current = newState
                 metaRef.current = meta
-                setState((prevState) => ({ data: [...prevState.data, ...data], loading: false }))
+                setState(newState)
             } catch (e) {
                 ErrorHandler.handleError(e)
                 stateRef.current.loading = false
@@ -36,8 +37,8 @@ export function usePagination<TData>(
     )
 
     useEffect(() => {
-        void requestData(0)
-    }, [])
+        void requestData(0, [])
+    }, [requestData])
 
     const canLoadMore = useCallback(() => {
         const { offset, total } = metaRef.current
@@ -47,13 +48,30 @@ export function usePagination<TData>(
 
     const loadNext = useCallback<VoidFunction>(() => {
         if (canLoadMore()) {
-            void requestData(metaRef.current.offset)
+            void requestData(metaRef.current.offset, stateRef.current.data)
         }
     }, [canLoadMore, requestData])
+
+    const reset = useCallback<VoidFunction>(() => {
+        void requestData(0, [])
+    }, [requestData])
+
+    const setData = useCallback<(data: TData[]) => void>((data) => {
+        const newState = { data, loading: false }
+        setState(newState)
+        stateRef.current = newState
+    }, [])
+
+    const getData = useCallback<() => TData[]>(() => {
+        return stateRef.current.data
+    }, [])
 
     return {
         ...state,
         loadNext,
         canLoadMore,
+        reset,
+        setData,
+        getData,
     }
 }

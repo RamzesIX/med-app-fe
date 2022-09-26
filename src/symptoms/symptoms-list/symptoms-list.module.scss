@@ -1,0 +1,14 @@
+@import 'src/styles/constants';
+
+.symptomsList {
+    display: grid;
+    grid-gap: $gridBase;
+
+    .header {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: $gridBase;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

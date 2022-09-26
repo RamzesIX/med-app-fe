@@ -1,0 +1,14 @@
+@import 'src/styles/constants';
+
+.listFooter {
+    display: flex;
+    padding: $gridMedium;
+    justify-content: center;
+}
+
+:global {
+    .mui-app-list {
+        padding: 0;
+        margin: 0;
+    }
+}

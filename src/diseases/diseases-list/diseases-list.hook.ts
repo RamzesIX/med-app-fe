@@ -16,6 +16,8 @@ export function useDiseasesList(): IDiseasesListHook {
     const navigate = useNavigate()
     const paginationState = usePagination<IDisease>(loadData)
 
+    const { setData, getData } = paginationState
+
     const navigateToDiseaseDetails = (id: string | null) => {
         const path = id ? `/diseases/${DiseaseRoutingAction.Update}/${id}` : `/diseases/${DiseaseRoutingAction.Create}`
         navigate(path)
@@ -24,6 +26,8 @@ export function useDiseasesList(): IDiseasesListHook {
     const deleteDisease = async (id: string): Promise<void> => {
         try {
             await DiseasesService.deleteDisease(id)
+            const data = getData()
+            setData(data.filter((item) => item.id !== id))
         } catch (e) {
             ErrorHandler.handleError(e)
         }

@@ -3,7 +3,7 @@ import { usePagination } from '../../core/hooks/pagination/pagination.hook'
 import { RisksService } from '../risks.service'
 import { IPaginationHook } from '../../core/hooks/pagination/pagination.hook.types'
 
-export interface IRisksHook extends Omit<IPaginationHook<IRisk>, 'data'> {
+export interface IRisksHook extends Pick<IPaginationHook<IRisk>, 'loadNext'> {
     risks: IRisk[]
     loading: boolean
 }
@@ -11,12 +11,11 @@ export interface IRisksHook extends Omit<IPaginationHook<IRisk>, 'data'> {
 const loadRisks = RisksService.getRisks.bind(RisksService)
 
 export const useRisks = (): IRisksHook => {
-    const { loading, data, canLoadMore, loadNext } = usePagination<IRisk>(loadRisks)
+    const { loading, data, loadNext } = usePagination<IRisk>(loadRisks)
 
     return {
         risks: data,
         loading,
-        canLoadMore,
         loadNext,
     }
 }

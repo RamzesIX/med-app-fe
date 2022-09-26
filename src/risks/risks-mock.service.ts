@@ -10,6 +10,7 @@ const risks: IRisk[] = new Array(100)
 export class RisksMockServiceImpl implements IRisksService {
     public async getRisks({ offset, limit }: IPaginationParams): Promise<IPaginationResponse<IRisk>> {
         console.debug('RisksMockServiceImpl.getRisks', offset, limit)
+        await delay(2000)
         const total = risks.length
         if (offset >= total) {
             return { data: [], meta: { limit, total, offset } }
