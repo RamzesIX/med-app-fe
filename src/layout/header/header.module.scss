@@ -3,8 +3,9 @@
 $headerBoxShadow: 0 4px 5px 0 rgba(0, 0, 0, 0.75);
 
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 100%;
     height: $headerHeight;
     box-shadow: $headerBoxShadow;
     z-index: $headerZIndex;

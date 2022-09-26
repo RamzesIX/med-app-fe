@@ -1,12 +1,12 @@
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 import { useAuth } from '../auth.hook'
 import { Navigate } from 'react-router-dom'
 
 export interface IGuardedRouteProps {
-    children: ReactNode
+    children: ReactElement
 }
 
-export const GuardedRoute = ({ children }: IGuardedRouteProps): ReactNode => {
+export const GuardedRoute = ({ children }: IGuardedRouteProps): ReactElement => {
     const { isAuthenticated } = useAuth()
 
     if (!isAuthenticated) {
