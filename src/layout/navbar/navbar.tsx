@@ -7,15 +7,12 @@ export const AppNavbar: FC = () => {
         <nav className="">
             <ul className={styles.links}>
                 <li>
-                    {' '}
                     <NavLink to="/diseases">Diseases</NavLink>
                 </li>
                 <li>
-                    {' '}
                     <NavLink to="/symptoms">Symptoms</NavLink>
                 </li>
                 <li>
-                    {' '}
                     <NavLink to="/risks">Risks</NavLink>
                 </li>
             </ul>
