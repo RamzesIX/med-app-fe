@@ -4,6 +4,7 @@ import { usePagination } from '../../core/hooks/pagination/pagination.hook'
 import { DiseasesService } from '../diseases.service'
 import { useNavigate } from 'react-router-dom'
 import { ErrorHandler } from '../../services/error-handler'
+import { ToastService } from '../../services/toast.service'
 
 export interface IDiseasesListHook extends IPaginationHook<IDisease> {
     navigateToDiseaseDetails(id: string | null): void
@@ -27,7 +28,20 @@ export function useDiseasesList(): IDiseasesListHook {
         try {
             await DiseasesService.deleteDisease(id)
             const data = getData()
-            setData(data.filter((item) => item.id !== id))
+
+            let name = ''
+            // TODO pass IDisease object into the function so no need to search for the name
+            setData(
+                data.filter((item) => {
+                    if (item.id === id) {
+                        name = item.name
+                        return false
+                    }
+                    return true
+                })
+            )
+
+            ToastService.showSuccess(`Disease ${name} has been deleted.`)
         } catch (e) {
             ErrorHandler.handleError(e)
         }

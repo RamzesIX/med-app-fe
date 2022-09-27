@@ -11,6 +11,7 @@ import { DiseaseRoutingAction } from './diseases/diseases.types'
 import { useEffect } from 'react'
 import { AuthService } from './auth/auth.service'
 import { filter, skip } from 'rxjs'
+import { Toaster } from 'react-hot-toast'
 
 export function App() {
     const navigate = useNavigate()
@@ -33,19 +34,22 @@ export function App() {
     }, [isLoginPageActive, navigate])
 
     return (
-        <Routes>
-            <Route path="/" element={<GuardedRoute />}>
-                <Route path="/" element={<AppMain />}>
-                    <Route path="/" element={<Navigate replace to="/diseases" />} />
-                    <Route path="/diseases" element={<DiseasesList />} />
-                    <Route path={`/diseases/${DiseaseRoutingAction.Create}`} element={<DiseaseDetails />} />
-                    <Route path={`/diseases/${DiseaseRoutingAction.Update}/:id`} element={<DiseaseDetails />} />
-                    <Route path="/symptoms" element={<SymptomsList />} />
-                    <Route path="/risks" element={<RisksList />} />
+        <>
+            <Routes>
+                <Route path="/" element={<GuardedRoute />}>
+                    <Route path="/" element={<AppMain />}>
+                        <Route path="/" element={<Navigate replace to="/diseases" />} />
+                        <Route path="/diseases" element={<DiseasesList />} />
+                        <Route path={`/diseases/${DiseaseRoutingAction.Create}`} element={<DiseaseDetails />} />
+                        <Route path={`/diseases/${DiseaseRoutingAction.Update}/:id`} element={<DiseaseDetails />} />
+                        <Route path="/symptoms" element={<SymptomsList />} />
+                        <Route path="/risks" element={<RisksList />} />
+                    </Route>
                 </Route>
-            </Route>
 
-            <Route path="login" element={<LoginPage />} />
-        </Routes>
+                <Route path="login" element={<LoginPage />} />
+            </Routes>
+            <Toaster />
+        </>
     )
 }
