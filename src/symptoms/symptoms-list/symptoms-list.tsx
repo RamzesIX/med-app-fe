@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 export const SymptomsList = () => {
-    const { symptoms, loadNext } = useSymptoms()
+    const { symptoms, loadNext, loading } = useSymptoms()
 
     return (
         <div className={styles.symptomsList}>
@@ -17,6 +17,7 @@ export const SymptomsList = () => {
                 </IconButton>
             </div>
             <AppList
+                loading={loading}
                 data={symptoms}
                 loadMore={loadNext}
                 itemContent={(_, { id, name, description }) => <SymptomCard id={id} name={name} description={description} />}

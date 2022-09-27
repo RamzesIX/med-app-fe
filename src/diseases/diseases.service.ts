@@ -21,16 +21,12 @@ class DiseaseServiceImpl implements IDiseasesService {
     }
 
     public async getDiseaseSymptoms(diseaseId: string): Promise<ISymptom[]> {
-        const params = { diseaseId }
-
-        const { data } = await this.httpClient(`/diseases/${diseaseId}`, { params })
+        const { data } = await this.httpClient.get(`/diseases/${diseaseId}/symptoms`)
         return data
     }
 
     public async getDiseaseRisks(diseaseId: string): Promise<IRisk[]> {
-        const params = { diseaseId }
-
-        const { data } = await this.httpClient(`/diseases/${diseaseId}`, { params })
+        const { data } = await this.httpClient.get(`/diseases/${diseaseId}/risks`)
         return data
     }
 

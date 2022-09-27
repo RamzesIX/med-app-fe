@@ -1,7 +1,5 @@
 import { CSSProperties, forwardRef, PropsWithChildren } from 'react'
-import { CircularProgress, List, ListItem } from '@mui/material'
-
-import * as styles from './list.module.scss'
+import { List, ListItem } from '@mui/material'
 
 export const MUIComponents = {
     // TODO fix any
@@ -21,9 +19,4 @@ export const MUIComponents = {
             </ListItem>
         )
     },
-    Footer: () => (
-        <div className={styles.listFooter}>
-            <CircularProgress />
-        </div>
-    ),
 }

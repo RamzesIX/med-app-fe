@@ -13,8 +13,9 @@ class SymptomServiceImpl implements ISymptomsService {
         return data
     }
 
+    // TODO do not request all the data at once
     public async getAllSymptoms(): Promise<ISymptom[]> {
-        const { data } = await this.httpClient.get<ISymptom[]>('/symptoms')
+        const { data } = await this.getSymptoms({ offset: 0, limit: 1000 })
         return data
     }
 
