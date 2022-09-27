@@ -6,6 +6,7 @@ export interface IAppListData {
 
 export interface IAppListProps<TData extends IAppListData> {
     data: TData[]
+    loading?: boolean
     loadMore(): void
     itemContent(index: number, data: TData): ReactNode
 }

@@ -14,7 +14,8 @@ class RisksServiceImpl implements IRisksService {
     }
 
     public async getAllRisks(): Promise<IRisk[]> {
-        const { data } = await this.httpClient.get<IRisk[]>('/risks')
+        // TODO do not request all the data at once
+        const { data } = await this.getRisks({ offset: 0, limit: 1000 })
         return data
     }
 
