@@ -23,3 +23,9 @@ export interface IPaginationResponse<TData> {
     data: TData[]
     meta: IPaginationMeta
 }
+
+export interface IServerErrorResponse {
+    statusCode: number
+    message: string
+    error: string
+}

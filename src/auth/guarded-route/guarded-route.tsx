@@ -1,12 +1,12 @@
 import { ReactElement } from 'react'
 import { useAuth } from '../auth.hook'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 export interface IGuardedRouteProps {
     children: ReactElement
 }
 
-export const GuardedRoute = ({ children }: IGuardedRouteProps): ReactElement => {
+export const GuardedRoute = (): ReactElement => {
     const { isAuthenticated } = useAuth()
 
     if (!isAuthenticated) {
@@ -14,5 +14,5 @@ export const GuardedRoute = ({ children }: IGuardedRouteProps): ReactElement => 
         return <Navigate to="/login" replace />
     }
 
-    return children
+    return <Outlet />
 }
