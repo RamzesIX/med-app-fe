@@ -24,6 +24,10 @@ class AuthMockServiceImpl implements IAuthService {
     public isAuthenticated(): boolean {
         return this.authSubject.value
     }
+
+    public getAccessToken(): string | null {
+        return null
+    }
 }
 
 export const AuthMockService = new AuthMockServiceImpl()
