@@ -8,7 +8,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import * as styles from './diseases-list.module.scss'
 
 export const DiseasesList: FC = () => {
-    const { data, loadNext, navigateToDiseaseDetails, deleteDisease } = useDiseasesList()
+    const { data, loadNext, navigateToDiseaseDetails, deleteDisease, loading } = useDiseasesList()
 
     return (
         <div className={styles.diseasesList}>
@@ -19,6 +19,7 @@ export const DiseasesList: FC = () => {
                 </IconButton>
             </div>
             <AppList
+                loading={loading}
                 data={data}
                 loadMore={loadNext}
                 itemContent={(_, { id, name, description }) => (
