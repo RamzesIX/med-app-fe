@@ -21,9 +21,7 @@ export const RisksList = () => {
                 loading={loading}
                 data={risks}
                 loadMore={loadNext}
-                itemContent={(_, { id, name, description }) => (
-                    <RiskCard id={id} name={name} description={description} className={styles.card} />
-                )}
+                itemContent={(_, { id, name, description }) => <RiskCard id={id} name={name} description={description} />}
             />
         </div>
     )

@@ -13,7 +13,7 @@ export const DiseasesList: FC = () => {
     return (
         <div className={styles.diseasesList}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Diseases</h1>
+                <h1>Diseases</h1>
                 <IconButton area-label="Add new disease." onClick={() => navigateToDiseaseDetails(null)}>
                     <AddCircleOutlineIcon fontSize="large" />
                 </IconButton>
