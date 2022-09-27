@@ -24,8 +24,7 @@ export class AuthRequestInterceptor {
                 }
 
                 const token = this.authService.getAccessToken()
-                // we the requests for the refresh url will add the refresh token
-                // so we avoid adding the access token here
+                // For some endpoints we shouldn't use Bearer token so we filter them
                 if (token && config.url && !this.blackListUrls.has(config.url)) {
                     updatedConfig.headers.Authorization = `Bearer ${token}`
                 }

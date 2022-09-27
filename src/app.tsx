@@ -17,7 +17,6 @@ export function App() {
     const location = useLocation()
 
     const isLoginPageActive = location.pathname === '/login'
-    console.log(location, isLoginPageActive)
 
     // Navigates a user to Login page after sign out
     useEffect(() => {
@@ -27,7 +26,6 @@ export function App() {
                 filter((authenticated) => !authenticated && !isLoginPageActive)
             )
             .subscribe(() => {
-                console.log('navigate')
                 navigate('/login')
             })
 
