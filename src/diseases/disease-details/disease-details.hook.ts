@@ -12,6 +12,7 @@ import { IRisk, RiskCreatePayload } from '../../risks/risks.types'
 import { ISymptom, SymptomCreatePayload } from '../../symptoms/symptoms.types'
 import { RisksService } from '../../risks/risks.service'
 import { SymptomsService } from '../../symptoms/symptoms.service'
+import { ToastService } from '../../services/toast.service'
 
 interface IDiseaseDetailsHookOptionsState {
     risks: IRisk[]
@@ -87,6 +88,7 @@ export function useDiseaseDetails(id: string | null): IDiseaseDetailsHook {
         try {
             await DiseasesService.createDisease(payload)
             navigate('/diseases')
+            ToastService.showSuccess(`Disease ${payload.name} has been created.`)
         } catch (e) {
             ErrorHandler.handleError(e)
         }
@@ -96,6 +98,7 @@ export function useDiseaseDetails(id: string | null): IDiseaseDetailsHook {
         try {
             await DiseasesService.updateDisease(payload)
             navigate('/diseases')
+            ToastService.showSuccess(`Disease ${payload.name} has been updated.`)
         } catch (e) {
             ErrorHandler.handleError(e)
         }

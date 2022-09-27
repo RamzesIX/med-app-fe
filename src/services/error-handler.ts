@@ -1,11 +1,13 @@
 import { ServerError } from '../core/errors'
+import { IToastService, ToastService } from './toast.service'
 
 export interface IErrorHandler {
     handleError(error: unknown): void
 }
 
 class ErrorHandlerImpl implements IErrorHandler {
-    // TODO Show Toast
+    constructor(private readonly toastService: IToastService) {}
+
     public handleError(error: unknown) {
         let errorMessage = 'Unknown Error.'
         if (typeof error === 'string') {
@@ -18,7 +20,8 @@ class ErrorHandlerImpl implements IErrorHandler {
             }
         }
         console.error(errorMessage)
+        this.toastService.showError(errorMessage)
     }
 }
 
-export const ErrorHandler = new ErrorHandlerImpl()
+export const ErrorHandler = new ErrorHandlerImpl(ToastService)
