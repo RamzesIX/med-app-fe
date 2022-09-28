@@ -11,7 +11,6 @@ export const AppHeader: FC = () => {
 
     const signOut: VoidFunction = () => {
         AuthService.signOut()
-        console.debug('Sign Out')
     }
 
     const username = currentUser?.name ?? ''

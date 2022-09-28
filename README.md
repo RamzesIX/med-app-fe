@@ -6,6 +6,7 @@ Client application used to manage medical information like diseases, risks or sy
 In order to install project dependencies and run/build the app, please ensure that you have the following software installed:
 - Node.js v16.14.2 or later
 - NPM v8.5.0 or later
+
 You will find more details regarding the Node.js and NPM installation [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ### Project dependencies
@@ -37,5 +38,16 @@ npm run build
 The resulted build includes the production environment configuration.
 
 ### App environment
-- Default dev environment configuration can be found in `.env` file. Note that you should use `env.local` file during development in order to override the configuration locally. Thus, copy `.env` file and rename it to `.env.local` and feel free to make any changes.
+- Default dev environment configuration can be found in `.env` file. Note that you can use `env.local` file during development in order to override the configuration locally.
 - Production environment configuration can be found in `.env.production` file.
+
+#### Configuration
+
+The following environment variables are used for project configuration:
+
+- `APP_API` - URI to the server API
+
+
+### Further development
+
+Please check [TODO file](TODO.md) to see the tasks.

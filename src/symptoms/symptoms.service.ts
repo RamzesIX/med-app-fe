@@ -2,8 +2,6 @@ import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { ISymptom, SymptomCreatePayload, SymptomCreateResponse, SymptomUpdatePayload } from './symptoms.types'
 import { HttpClient, IHttpClient } from '../services/http-client'
 import { ISymptomsService } from './symptoms.service.types'
-import { isClientMode } from '../core/utils'
-import { SymptomMockServiceImpl } from './symptoms-mock.service'
 
 class SymptomServiceImpl implements ISymptomsService {
     constructor(private readonly httpClient: IHttpClient) {}
@@ -29,4 +27,4 @@ class SymptomServiceImpl implements ISymptomsService {
     }
 }
 
-export const SymptomsService = isClientMode() ? new SymptomMockServiceImpl() : new SymptomServiceImpl(HttpClient)
+export const SymptomsService = new SymptomServiceImpl(HttpClient)

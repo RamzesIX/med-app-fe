@@ -1,9 +1,7 @@
 import { IPaginationParams, IPaginationResponse } from '../core/types'
 import { IRisk, RiskCreatePayload, RiskCreateResponse, RiskUpdatePayload } from './risks.types'
 import { HttpClient, IHttpClient } from '../services/http-client'
-import { isClientMode } from '../core/utils'
 import { IRisksService } from './risks.service.types'
-import { RisksMockServiceImpl } from './risks-mock.service'
 
 class RisksServiceImpl implements IRisksService {
     constructor(private readonly httpClient: IHttpClient) {}
@@ -29,4 +27,4 @@ class RisksServiceImpl implements IRisksService {
     }
 }
 
-export const RisksService = isClientMode() ? new RisksMockServiceImpl() : new RisksServiceImpl(HttpClient)
+export const RisksService = new RisksServiceImpl(HttpClient)

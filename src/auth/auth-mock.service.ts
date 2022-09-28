@@ -1,12 +1,15 @@
-import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs'
+import { BehaviorSubject, distinctUntilChanged, Observable, Subject } from 'rxjs'
 import { IAuthService } from './auth.service'
+import { AuthEvent, IAuthEvent } from './auth.types'
 
 class AuthMockServiceImpl implements IAuthService {
     private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
     public isAuthenticated$: Observable<boolean> = this.authSubject.asObservable().pipe(distinctUntilChanged())
+    private authEventsSubject: Subject<IAuthEvent> = new Subject<IAuthEvent>()
+    public authEvents$: Observable<IAuthEvent> = this.authEventsSubject.asObservable()
 
     public async signIn(login: string, password: string): Promise<void> {
-        console.log(`AuthMockService.signIn, Login: ${login}, Password: ${password}`)
+        console.debug(`AuthMockService.signIn, Login: ${login}, Password: ${password}`)
         await new Promise<void>((res) => {
             setTimeout(() => {
                 res()
@@ -14,11 +17,13 @@ class AuthMockServiceImpl implements IAuthService {
         })
 
         this.authSubject.next(true)
+        this.authEventsSubject.next({ event: AuthEvent.SignOut })
     }
 
     public signOut(): void {
-        console.log(`AuthMockService.signOut`)
+        console.debug(`AuthMockService.signOut`)
         this.authSubject.next(false)
+        this.authEventsSubject.next({ event: AuthEvent.SignOut })
     }
 
     public isAuthenticated(): boolean {
@@ -26,7 +31,7 @@ class AuthMockServiceImpl implements IAuthService {
     }
 
     public getAccessToken(): string | null {
-        return null
+        return this.authSubject.value ? 'token' : null
     }
 }
 

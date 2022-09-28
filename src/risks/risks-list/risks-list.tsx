@@ -3,8 +3,6 @@ import { RiskCard } from '../risk-card/risk-card'
 
 import * as styles from './risks-list.module.scss'
 import { AppList } from '../../components/list/list'
-import { IconButton } from '@mui/material'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 export const RisksList = () => {
     const { risks, loadNext, loading } = useRisks()
@@ -13,9 +11,9 @@ export const RisksList = () => {
         <div className={styles.risksList}>
             <div className={styles.header}>
                 <h1>Risks</h1>
-                <IconButton area-label="Add new risk." onClick={() => console.log('Risk Dialog')}>
-                    <AddCircleOutlineIcon fontSize="large" />
-                </IconButton>
+                {/*<IconButton area-label="Add new risk." onClick={() => console.log('Risk Dialog')}>*/}
+                {/*    <AddCircleOutlineIcon fontSize="large" />*/}
+                {/*</IconButton>*/}
             </div>
             <AppList
                 loading={loading}
