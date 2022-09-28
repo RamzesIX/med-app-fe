@@ -11,7 +11,6 @@ export function useUsers(): IUsersHook {
 
     useEffect(() => {
         const sub = UsersService.currentUser$.subscribe((user) => {
-            console.log('user', user)
             setState(user)
         })
 

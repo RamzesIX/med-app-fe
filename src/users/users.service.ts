@@ -29,7 +29,6 @@ class UsersServiceImpl implements IUsersService {
                 })
             )
             .subscribe((user) => {
-                console.log('currentUserSubject', user)
                 this.currentUserSubject.next(user)
             })
 
@@ -43,7 +42,6 @@ class UsersServiceImpl implements IUsersService {
     private async init(): Promise<void> {
         try {
             let currentUser = this.getUserFromStorage()
-            console.log('currentUserSubject', currentUser)
             if (currentUser) {
                 currentUser = await this.loadCurrentUser(currentUser.id)
                 this.currentUserSubject.next(currentUser)
