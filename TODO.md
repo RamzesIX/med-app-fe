@@ -1,6 +1,7 @@
 ### Further project development and improvements
 
 #### TODO:
+- Support small screen devices.
 - Replace from Parcel build tool with Webpack configuration.
 - Make ESLint config more rigid
 - Support Automated tests
