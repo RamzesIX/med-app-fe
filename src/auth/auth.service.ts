@@ -1,9 +1,9 @@
 import { HttpClient, IHttpClient } from '../services/http-client'
 import { ErrorHandler, IErrorHandler } from '../services/error-handler'
-import { ISignInPayload, ISignInResponse } from './auth.types'
+import { AuthEvent, IAuthEvent, ISignInPayload, ISignInResponse } from './auth.types'
 import { IResponse } from '../core/types'
 import { AuthStorageService, IAuthStorageService } from './auth-storage.service'
-import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs'
+import { BehaviorSubject, distinctUntilChanged, Observable, Subject } from 'rxjs'
 import { AuthRequestInterceptor } from './auth-request-interceptor'
 import { AuthResponseInterceptor } from './auth-response-interceptor'
 
@@ -13,11 +13,15 @@ export interface IAuthService {
     isAuthenticated(): boolean
     getAccessToken(): string | null
     isAuthenticated$: Observable<boolean>
+    authEvents$: Observable<IAuthEvent>
 }
 
 class AuthServiceImpl implements IAuthService {
     private authSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated())
     public isAuthenticated$: Observable<boolean> = this.authSubject.asObservable().pipe(distinctUntilChanged())
+
+    private authEventsSubject: Subject<IAuthEvent> = new Subject<IAuthEvent>()
+    public authEvents$: Observable<IAuthEvent> = this.authEventsSubject.asObservable()
 
     constructor(
         private readonly httpClient: IHttpClient,
@@ -34,11 +38,13 @@ class AuthServiceImpl implements IAuthService {
         const { data } = await this.httpClient.post<ISignInPayload, IResponse<ISignInResponse>>(endpoint, body)
         this.saveTokens(data)
         this.authSubject.next(true)
+        this.authEventsSubject.next({ event: AuthEvent.SignIn, payload: { userId: data.userId } })
     }
 
     public signOut(): void {
         this.clearTokens()
         this.authSubject.next(false)
+        this.authEventsSubject.next({ event: AuthEvent.SignOut })
     }
 
     public isAuthenticated(): boolean {
