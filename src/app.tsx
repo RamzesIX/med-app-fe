@@ -10,8 +10,9 @@ import { DiseaseDetails } from './diseases/disease-details/disease-details'
 import { DiseaseRoutingAction } from './diseases/diseases.types'
 import { useEffect } from 'react'
 import { AuthService } from './auth/auth.service'
-import { filter, skip } from 'rxjs'
+import { filter } from 'rxjs'
 import { Toaster } from 'react-hot-toast'
+import { AuthEvent } from './auth/auth.types'
 
 export function App() {
     const navigate = useNavigate()
@@ -21,14 +22,9 @@ export function App() {
 
     // Navigates a user to Login page after sign out
     useEffect(() => {
-        const sub = AuthService.isAuthenticated$
-            .pipe(
-                skip(1),
-                filter((authenticated) => !authenticated && !isLoginPageActive)
-            )
-            .subscribe(() => {
-                navigate('/login')
-            })
+        const sub = AuthService.authEvents$.pipe(filter(({ event }) => event === AuthEvent.SignOut && !isLoginPageActive)).subscribe(() => {
+            navigate('/login')
+        })
 
         return () => sub.unsubscribe()
     }, [isLoginPageActive, navigate])
