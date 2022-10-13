@@ -1,5 +1,5 @@
-# med-app-fe
-Client application used to manage medical information like diseases, risks or symptoms.
+# [Showcase][React] Single Page app
+Showcase app to demonstrate the code quality, architectural decisions and UX approaches I usually make developing a client Web app. The repository contains the client application used to manage medical information like diseases, risks or symptoms. You can find and check the server app [here](https://github.com/RamzesIX/med-app-be).
 
 ### Prerequisites
 
@@ -28,7 +28,15 @@ To run the app using dev server, use the following command:
 ```
 npm run start
 ```
-Hot reloading is enabled automatically. The app should be available in browser at at http://localhost:8080.
+Hot reloading is enabled automatically. The app should be available in browser at http://localhost:8080.
+
+#### Default user credentials
+
+There are default user credentials you can use in order sign in into the app:
+```
+login: admin@test.com
+password: admin
+```
 
 ### Build
 To build the project use the following command:
